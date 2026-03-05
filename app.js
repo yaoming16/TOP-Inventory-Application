@@ -2,9 +2,9 @@ const express = require("express");
 const path = require("node:path");
 const indexRouter = require("./routes/indexRouter");
 const categoriesRouter = require("./routes/categoriesRouter");
+const developersRouter = require("./routes/developersRouter");
 
-require('dotenv').config();
-
+require("dotenv").config();
 
 const app = express();
 
@@ -18,6 +18,7 @@ app.use(express.static(assetPath));
 
 app.use("/", indexRouter);
 app.use("/categories", categoriesRouter);
+app.use("/developers", developersRouter);
 
 app.use((err, req, res, next) => {
   console.error(err);

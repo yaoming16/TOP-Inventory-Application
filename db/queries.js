@@ -1,23 +1,34 @@
 const pool = require("./pool");
 
-const updateQuery = `
-UPDATE categories
-SET name = $1
-WHERE $2 = id
-`
-
-async function getAllCategories() {
-  const {rows} = await pool.query("SELECT * FROM categories");
+async function getAll(table) {
+  const { rows } = await pool.query(`SELECT * FROM ${table}`);
   return rows;
 }
 
-async function getCategoryById(id) {
-  const {rows} = await pool.query("SELECT * FROM categories WHERE id = $1", [id]);
+async function getById(id, table) {
+  const { rows } = await pool.query(`SELECT * FROM ${table} WHERE id = $1`, [id]);
   return rows[0];
 }
 
-async function editCategory(id, newName) { 
-  await pool.query(updateQuery, [newName, id]);
+async function edit(id, newName, table) {
+  await pool.query(
+    `UPDATE ${table} SET name = $1 WHERE id = $2`,
+    [newName, id],
+  );
 }
 
-module.exports = {getAllCategories, getCategoryById, editCategory};
+async function add(name, table) {
+  await pool.query(`INSERT INTO ${table} (name) VALUES ($1)`, [name]);
+}
+
+async function deleteElement(id, table) {
+  await pool.query(`DELETE FROM ${table} WHERE id = $1`, [id]);
+}
+
+module.exports = {
+  getAll,
+  getById,
+  edit,
+  add,
+  deleteElement,
+};

@@ -1,7 +1,6 @@
 const { createController } = require("./genericController");
 const { body } = require("express-validator");
 
-
 const validationRules = [
   body("name")
     .trim()
@@ -12,6 +11,6 @@ const validationRules = [
     .escape(),
 ];
 
-const categoriesController = createController("categories");
+const developersController = createController("developers");
 
-module.exports = {categoriesController, validationRules};
+module.exports = {developersController, validationRules};

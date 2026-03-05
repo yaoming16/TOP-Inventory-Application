@@ -1,10 +1,11 @@
 <dialog id="editModal">
-  <form method="post" action="/categories/<%= id %>/edit">
+  <form method="post" id="editForm" action="/categories">
     <div>
       <label for="nameInput">Name</label>
       <input type="text" name="name" id="nameInput" />
     </div>
-    <button type="submit" onclick="closeSave()">Save</button>
+    <P id="errorP"></P>
+    <button type="submit" >Save</button>
     <button type="button" onclick="closeModal()">Cancel</button>
   </form>
 </dialog>

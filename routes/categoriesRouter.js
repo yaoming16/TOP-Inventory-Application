@@ -1,10 +1,20 @@
-const {Router} = require("express");
-const categoriesController = require("../controllers/categoriesController.js");
+const { Router } = require("express");
+const {categoriesController, validationRules} = require("../controllers/categoriesController.js");
 
 const categoriesRouter = Router();
 
-categoriesRouter.get("/", categoriesController.getAllCategories);
-categoriesRouter.get("/:id", categoriesController.getCategoryById);
-categoriesRouter.put("/:id/edit", categoriesController.updateCategory);
+categoriesRouter.get("/", categoriesController.getAll);
+categoriesRouter.get("/:id", categoriesController.getById);
+categoriesRouter.post(
+  "/:id/edit",
+  validationRules,
+  categoriesController.update,
+);
+categoriesRouter.post(
+  "/add",
+  validationRules,
+  categoriesController.add,
+);
+categoriesRouter.delete("/:id/delete",categoriesController.delete);
 
 module.exports = categoriesRouter;

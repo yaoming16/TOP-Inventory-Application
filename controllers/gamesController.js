@@ -1,9 +1,9 @@
 const db = require("../db/gameQueries");
 
 async function getAllGames(req, res) {
-  const data = await db.getAllGames();
+  const data = await db.getAllGamesInfo();
   res.render("games", {
-    info: data,
+    gamesInfo: data,
   });
 }
 

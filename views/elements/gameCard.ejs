@@ -1,0 +1,15 @@
+<% const date = new Date(gameInfo.release);
+const formatedDate = date.toLocaleDateString();
+%>
+
+<article>
+  <img src="<%= gameInfo.image_link %>">
+  <h2><%= gameInfo.title %></h2>
+  <p><%= gameInfo.description %></p>
+  <p><%= formatedDate %></p>
+  <div>
+    <% gameInfo.categories.forEach(category => { %>
+     <p><%= category %></p>
+    <% }) %>
+  </div>
+</article>

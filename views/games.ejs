@@ -5,5 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Games - Games Inventory</title>
   </head>
-  <body></body>
+  <body>
+    <%- include("./elements/nav.ejs") %>
+    <main>
+      <h1>Games</h1>
+      <ul>
+        <% for (let i = 0; i < gamesInfo.length; i++) { %>
+          <li>
+            <%- include("./elements/gameCard", {gameInfo: gamesInfo[i]}) %>
+          </li>
+        <%} %>
+      </ul>
+    </main>
+  </body>
 </html>

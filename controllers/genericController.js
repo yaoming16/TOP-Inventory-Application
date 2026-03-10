@@ -3,6 +3,10 @@ const { validationResult } = require("express-validator");
 
 function createController(type) {
   return {
+    getAllInfo: async (req, res) => {
+      const data = await db.getAll(type);
+      res.status(200).json(data);
+    },
     getAll: async (req, res) => {
       const data = await db.getAll(type);
       res.render("categoryTemplate", {

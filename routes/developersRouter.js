@@ -4,6 +4,7 @@ const {developersController, validationRules} = require("../controllers/develope
 const developersRouter = Router();
 
 developersRouter.get("/", developersController.getAll);
+developersRouter.get("/info", developersController.getAllInfo);
 developersRouter.get("/:id", developersController.getById);
 developersRouter.post(
   "/:id/edit",

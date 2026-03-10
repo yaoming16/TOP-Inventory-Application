@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="/js/gameModal.js" defer></script>
     <title>Games - Games Inventory</title>
   </head>
   <body>
@@ -10,7 +11,7 @@
     <main>
       <h1>Games</h1>
       <button id="addGameBtn">Add Game</button>
-      <%- include("./elements/gameModal.ejs", { categories: categories, developers: developers }) %>
+      <%- include("./elements/gameModal.ejs") %>
       <ul>
         <% for (let i = 0; i < gamesInfo.length; i++) { %>
         <li>
@@ -19,11 +20,5 @@
         <%} %>
       </ul>
     </main>
-    <script>
-      const modal = document.getElementById("gameModal");
-      document.getElementById("addGameBtn").addEventListener("click", () => {
-        modal.showModal();
-      });
-    </script>
   </body>
 </html>

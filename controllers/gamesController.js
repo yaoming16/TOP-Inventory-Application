@@ -1,16 +1,45 @@
 const gameDB = require("../db/gameQueries");
-const categoriesDB = require("../db/queries");
+const { validationResult, body } = require("express-validator");
+
+const validationRules = [
+  body("title")
+    .trim()
+    .notEmpty()
+    .withMessage("Name is required")
+    .isLength({ min: 3, max: 50 })
+    .withMessage("Name must be between 3 and 50 characters")
+    .escape(),
+  body("releseDate")
+    .notEmpty().withMessage('Release date is required')
+    .isDate().withMessage('Invalid date format')
+    .isBefore(new Date().toISOString()).withMessage('Date must be in the past'),
+  body("description")
+    .notEmpty().withMessage("Description is required")
+    .escape(),
+  body("developer")
+    .notEmpty().withMessage("Developer is required"),
+  body("category")
+    .notEmpty().withMessage("Category is required"),
+];
 
 async function getAllGames(req, res) {
   const data = await gameDB.getAllGamesInfo();
-  const categories = await categoriesDB.getAll("categories");
-  const developers = await categoriesDB.getAll("developers");
   let toReturn = {
     gamesInfo: data,
-    categories: categories,
-    developers: developers,
   };
   res.render("games", toReturn);
 }
 
-module.exports = { getAllGames };
+async function addGame(req, res) {
+  const errors = validationResult(req);
+
+  if(!errors.isEmpty()) {
+    return res.status(400).render("errors", { errors: errors.array() });
+  }
+  const imgLink = "/images/1";
+  console.log({...req.body, imgLink})
+  await gameDB.addGame({...req.body, imgLink});
+  return res.sendStatus(200);
+}
+
+module.exports = { getAllGames, addGame, validationRules};

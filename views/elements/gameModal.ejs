@@ -13,28 +13,18 @@
       <textarea name="description" id="description" type="date"></textarea>
     </div>
     <div>
-      <fieldset>
+      <fieldset id="categoriesFieldset">
         <legend>Categories</legend>
-        <% for(let i = 0; i < categories.length; i++) { %>
-        <label for="<%= categories[i].name %>"><%= categories[i].name %></label>
-        <input
-          type="checkbox"
-          name="category"
-          id="<%= categories[i].name %>"
-          value="<%= categories[i].id %>"
-        />
-        <% } %>
       </fieldset>
     </div>
     <div>
       <label for="developer">Developer</label>
       <select name="developer" id="developer">
-        <% for(let i = 0; i < developers.length; i++) { %>
-        <option value="<%= developers[i].id %>">
-          <%= developers[i].name %>
-        </option>
-        <% } %>
       </select>
+    </div>
+    <div>
+      <label for="gameImg">Developer</label>
+      <input type="file" accept="image/png, image/jpeg" name="gameImg" id="gameImg">
     </div>
     <button type="submit">Save</button>
     <button

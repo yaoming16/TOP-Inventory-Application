@@ -4,6 +4,7 @@ const {categoriesController, validationRules} = require("../controllers/categori
 const categoriesRouter = Router();
 
 categoriesRouter.get("/", categoriesController.getAll);
+categoriesRouter.get("/info", categoriesController.getAllInfo);
 categoriesRouter.get("/:id", categoriesController.getById);
 categoriesRouter.post(
   "/:id/edit",

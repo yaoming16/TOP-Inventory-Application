@@ -9,13 +9,21 @@
     <%- include("./elements/nav.ejs") %>
     <main>
       <h1>Games</h1>
+      <button id="addGameBtn">Add Game</button>
+      <%- include("./elements/gameModal.ejs", { categories: categories, developers: developers }) %>
       <ul>
         <% for (let i = 0; i < gamesInfo.length; i++) { %>
-          <li>
-            <%- include("./elements/gameCard", {gameInfo: gamesInfo[i]}) %>
-          </li>
+        <li>
+          <%- include("./elements/gameCard.ejs", {gameInfo: gamesInfo[i]}) %>
+        </li>
         <%} %>
       </ul>
     </main>
+    <script>
+      const modal = document.getElementById("gameModal");
+      document.getElementById("addGameBtn").addEventListener("click", () => {
+        modal.showModal();
+      });
+    </script>
   </body>
 </html>

@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Errors - Games Inventory</title>
-</head>
-<body>
-  <%- include("./elements/nav.ejs") %>
-  <main>
-    <div class="error-container">
-      <h1>Validation Error</h1>
-      <p>Please fix the following errors:</p>
-      <ul class="error-list">
-        <% errors.forEach(error => { %>
-          <li>• <%= error.msg %></li>
-        <% }) %>
-      </ul>
-      <a href="/category" class="back-button">← Go Back</a>
-    </div>
-  </main>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Errors - Games Inventory</title>
+  </head>
+  <body>
+    <%- include("./elements/nav.ejs") %>
+    <main>
+      <div class="error-container">
+        <h1>Validation Error</h1>
+        <p>Please fix the following errors:</p>
+        <ul class="error-list">
+          <% errors.forEach(error => { %>
+          <li>
+            •
+            <%= error.msg %>
+          </li>
+          <% }) %>
+        </ul>
+        <a href="/category" class="back-button">← Go Back</a>
+      </div>
+    </main>
+  </body>
 </html>

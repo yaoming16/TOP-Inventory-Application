@@ -1,43 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="/js/modal.js" defer></script>
-  <title><%= title %> - Games Inventory</title>
-</head>
-<body>
-   <%- include("./elements/nav.ejs") %>
-  <main>
-    <h1><%= title %></h1>
-    <button onclick="openEditModal('<%= type %>', 'add')">
-      Add <%= title %>
-    </button>
-    <ul id="cardsContainer">
-      <% for (let i = 0; i < info.length; i++ ) { %>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="/js/modal.js" defer></script>
+    <title><%= title %> - Games Inventory</title>
+  </head>
+  <body>
+    <%- include("./elements/nav.ejs") %>
+    <main>
+      <h1><%= title %></h1>
+      <button onclick="openEditModal('<%= type %>', 'add')">
+        Add <%= title %>
+      </button>
+      <ul id="cardsContainer">
+        <% for (let i = 0; i < info.length; i++ ) { %>
         <li>
           <%- include("./elements/card", {name: info[i].name, id: info[i].id, type : type }) %>
         </li>
-      <% } %>
-    </ul>
-    <%- include("./elements/simpleModal.ejs") %>
-  </main>
-</body>
+        <% } %>
+      </ul>
+      <%- include("./elements/simpleModal.ejs") %>
+    </main>
+  </body>
 </html>
 
 <script>
-  const cardsContainer = document.getElementById('cardsContainer');
-  cardsContainer.addEventListener('click', async (e) => {
+  const cardsContainer = document.getElementById("cardsContainer");
+  cardsContainer.addEventListener("click", async (e) => {
     if (!e.target.classList.contains("deleteBtn")) return;
-    
-    const res = await fetch(`<%= type %>/${e.target.id}/delete`,
-      {method: "DELETE"}
-    );
-    
+
+    const res = await fetch(`<%= type %>/${e.target.id}/delete`, {
+      method: "DELETE",
+    });
+
     if (res.ok) {
       window.location.reload();
     } else {
-      console.log('Failed to delete');
+      console.log("Failed to delete");
     }
-  } )
+  });
 </script>

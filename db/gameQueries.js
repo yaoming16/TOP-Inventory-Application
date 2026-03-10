@@ -64,4 +64,5 @@ async function getAllCategoriesOfAGame(id) {
 module.exports = {
   getAllGamesInfo,
   getAllCategoriesOfAGame,
+  getGameInfo,
 };

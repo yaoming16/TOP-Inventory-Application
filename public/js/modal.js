@@ -2,15 +2,18 @@ async function openEditModal(type, mode, id = null) {
   let url;
   let formAction;
 
+  let input = document.getElementById("nameInput");
+
   if (mode === "edit") {
     url = `${type}/${id}`;
     formAction = `/${type}/${id}/edit`;
 
     const response = await fetch(url);
     const category = await response.json();
-    document.getElementById("nameInput").value = category.name;
+    input.value = category.name;
   } else if (mode === "add") {
     formAction = `/${type}/add`;
+    input.value = "";
   }
 
   form.setAttribute("action", formAction);

@@ -35,6 +35,11 @@ async function getAllGames(req, res) {
   res.render("games", toReturn);
 }
 
+async function getGameById(req, res)  {
+  const info = await gameDB.getGameInfo(req.params.id);
+  return res.status(200).json(info);
+}
+
 async function addGame(req, res) {
   const errors = validationResult(req);
 
@@ -64,4 +69,4 @@ async function addGame(req, res) {
   return res.sendStatus(200);
 }
 
-module.exports = { getAllGames, addGame, validationRules };
+module.exports = { getAllGames, addGame, getGameById, validationRules };

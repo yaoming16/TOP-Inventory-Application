@@ -5,6 +5,7 @@ const upload = require("../middleware/upload.js");
 const gamesRouter = Router();
 
 gamesRouter.get("/", gamesController.getAllGames);
+gamesRouter.get("/:id", gamesController.getGameById);
 gamesRouter.post(
 	"/add",
 	upload.single("gameImg"),

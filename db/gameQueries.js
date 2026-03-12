@@ -8,13 +8,15 @@ async function getAllGamesInfo() {
       g.description,
       g.release,
       g.image_link,
+      d.name AS developer,
     COALESCE(
     ARRAY_AGG(c.name ORDER BY c.name) FILTER (WHERE c.id IS NOT NULL)
     ) AS categories
     FROM games AS G
     LEFT JOIN games_categories gc ON gc.game_id = g.id
     LEFT JOIN categories c ON c.id = gc.category_id
-    GROUP BY g.id, g.title
+    LEFT JOIN developers d ON d.id = g.developer_id
+    GROUP BY g.id, g.title, d.name
     ORDER BY g.title;
     `);
   return rows;
@@ -29,19 +31,20 @@ async function getGameInfo(id) {
       g.description,
       g.release,
       g.image_link,
+      g.developer_id,
     COALESCE(
     ARRAY_AGG(c.name ORDER BY c.name) FILTER (WHERE c.id IS NOT NULL)
     ) AS categories
     FROM games AS G
     LEFT JOIN games_categories gc ON gc.game_id = g.id
     LEFT JOIN categories c ON c.id = gc.category_id
+    WHERE g.id = $1
     GROUP BY g.id, g.title
     ORDER BY g.title
-    WHERE id = $1
     `,
     [id],
   );
-  return rows;
+  return rows[0] ?? null;
 }
 
 async function getAllCategoriesOfAGame(id) {

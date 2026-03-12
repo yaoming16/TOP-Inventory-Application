@@ -1,5 +1,10 @@
 <dialog id="gameModal">
-  <form method="post" id="gameForm" action="/games/add" enctype="multipart/form-data">
+  <form
+    method="post"
+    id="gameForm"
+    action="/games/add"
+    enctype="multipart/form-data"
+  >
     <div>
       <label for="title">Title</label>
       <input name="title" id="title" type="text" />
@@ -13,19 +18,23 @@
       <textarea name="description" id="description" type="date"></textarea>
     </div>
     <div>
-      <fieldset >
+      <fieldset>
         <legend>Categories</legend>
         <div id="categoriesFieldset"></div>
       </fieldset>
     </div>
     <div>
       <label for="developer">Developer</label>
-      <select name="developer" id="developer">
-      </select>
+      <select name="developer" id="developer"></select>
     </div>
     <div>
       <label for="gameImg">Game Image</label>
-      <input type="file" accept="image/png, image/jpeg" name="gameImg" id="gameImg">
+      <input
+        type="file"
+        accept="image/png, image/jpeg"
+        name="gameImg"
+        id="gameImg"
+      />
     </div>
     <button type="submit">Save</button>
     <button

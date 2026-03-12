@@ -106,3 +106,20 @@ async function openGameEditModal(id) {
 
   modal.showModal();
 }
+
+// Form submission
+const gameModal = document.getElementById("gameModal");
+
+gameModal.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(e.target);
+  const title = formData.get("title");
+  const releaseDate = formData.get("releseDate");
+  const description = formData.get("description");
+  const category = formData.getAll("category");
+  const developer = formData.get("developer");
+
+  
+
+})

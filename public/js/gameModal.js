@@ -48,6 +48,8 @@ function emptyForm() {
   titleInput.value = "";
   releaseDateInput.value = "";
   descriptionTextArea.value = "";
+  //Empty error messages
+
 }
 
 // This is for the btn to add a new game
@@ -95,7 +97,7 @@ async function openGameEditModal(id) {
 
   //Add developers to the select
   if (developers) {
-    console.log(gameInfo.developer_id)
+    console.log(gameInfo.developer_id);
     addDevelopers(developers, developersSelect, gameInfo.developer_id);
   }
 
@@ -108,18 +110,76 @@ async function openGameEditModal(id) {
 }
 
 // Form submission
-const gameModal = document.getElementById("gameModal");
+const gameForm = document.getElementById("gameForm");
 
-gameModal.addEventListener("submit", async (e) => {
+gameForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const formData = new FormData(e.target);
-  const title = formData.get("title");
-  const releaseDate = formData.get("releseDate");
-  const description = formData.get("description");
   const category = formData.getAll("category");
-  const developer = formData.get("developer");
 
-  
+  //validate categories
+  if (category.legnth === 0) { 
+    categoriesError.textContent = "Please, select at least one category";
+  } else {
+    gameForm.submit();
+  }
+});
 
-})
+//Error messages spans
+const titleError = document.getElementById("titleError");
+const releaseDateError = document.getElementById("releaseDateError");
+const descriptionError = document.getElementById("descriptionError");
+const categoriesError = document.getElementById("categoriesError");
+const developerError = document.getElementById("developerError");
+
+//Set title and description validations
+function setValidation(DomElement, name, errorElement, minLength) {
+  DomElement.addEventListener("input", () => {
+    if (DomElement.validity.valueMissing) {
+      DomElement.setCustomValidity(`Game ${name} can't be left empty`);
+      errorElement.textContent = `Game ${name} can't be left empty`;
+    } else if (DomElement.validity.tooShort) {
+      DomElement.setCustomValidity(
+        `Game ${name} must have at least three characters`,
+      );
+      errorElement.textContent = `Game ${name} must have at least ${minLength} characters`;
+    } else {
+      DomElement.setCustomValidity("");
+      errorElement.textContent = "";
+    }
+  });
+}
+
+setValidation(titleInput, "title", titleError, 3);
+setValidation(descriptionTextArea, "description", descriptionError, 15);
+
+// Release date validation
+releaseDateInput.addEventListener("input", () => {
+  if (releaseDateInput.validity.valueMissing) {
+    releaseDateInput.setCustomValidity(
+      "Please, select a date before today's date",
+    );
+    releaseDateError.textContent = "Please, select a date before today's date";
+  } else if (releaseDateInput.value >= new Date().toLocaleDateString("en-CA")) {
+    releaseDateInput.setCustomValidity(
+      "The selected date must be before today's date",
+    );
+    releaseDateError.textContent =
+      "The selected date must be before today's date";
+  } else {
+    releaseDateInput.setCustomValidity("");
+    releaseDateError.textContent = "";
+  }
+});
+
+//Developer validation
+developersSelect.addEventListener("input", () => {
+  if (developersSelect.validity.valueMissing) {
+    developersSelect.setCustomValidity("Please, select a developer");
+    releaseDateError.textContent = "Please, select a developer";
+  } else {
+    releaseDateInput.setCustomValidity("");
+    releaseDateError.textContent = "";
+  }
+});

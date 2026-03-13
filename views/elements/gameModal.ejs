@@ -7,34 +7,40 @@
   >
     <div>
       <label for="title">Title</label>
-      <input name="title" id="title" type="text" />
+      <input name="title" id="title" type="text" required minlength="3"/>
+      <span id="titleError"></span>
     </div>
     <div>
       <label for="releseDate">Release Date</label>
-      <input name="releseDate" id="releseDate" type="date" />
+      <input name="releseDate" id="releseDate" type="date" required/>
+      <span id="releaseDateError"></span>
     </div>
     <div>
       <label for="description">Game Description</label>
-      <textarea name="description" id="description" type="date"></textarea>
+      <textarea name="description" id="description" type="date" required minlength="15"></textarea>
+      <span id="descriptionError"></span>
     </div>
     <div>
       <fieldset>
         <legend>Categories</legend>
         <div id="categoriesFieldset"></div>
+        <span id="categoriesError"></span>
       </fieldset>
     </div>
     <div>
       <label for="developer">Developer</label>
-      <select name="developer" id="developer"></select>
+      <select name="developer" id="developer" required></select>
+      <span id="developerError"></span>
     </div>
     <div>
       <label for="gameImg">Game Image</label>
       <input
         type="file"
-        accept="image/png, image/jpeg"
+        accept="image/png, image/jpeg, image/webp"
         name="gameImg"
         id="gameImg"
       />
+      <span id="gameImgError"></span>
     </div>
     <button type="submit">Save</button>
     <button

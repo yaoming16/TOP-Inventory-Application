@@ -9,8 +9,8 @@ const validationRules = [
     .trim()
     .notEmpty()
     .withMessage("Name is required")
-    .isLength({ min: 3, max: 50 })
-    .withMessage("Name must be between 3 and 50 characters")
+    .isLength({ min: 3 })
+    .withMessage("Name must have at least three characters")
     .escape(),
   body("releseDate")
     .notEmpty()
@@ -22,6 +22,8 @@ const validationRules = [
   body("description")
     .notEmpty()
     .withMessage("Description is required")
+    .isLength({min: 15})
+    .withMessage("Description must be at least 15 characters")
     .escape(),
   body("developer").notEmpty().withMessage("Developer is required"),
   body("category").notEmpty().withMessage("Category is required"),

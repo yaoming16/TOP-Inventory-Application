@@ -23,7 +23,9 @@ function createController(type) {
       const errors = validationResult(req);
 
       if (!errors.isEmpty()) {
-        return res.status(400).render("errors", { errors: errors.array() });
+        return res
+          .status(400)
+          .render("errors", { errors: errors.array(), goBack: `/${type}` });
       }
 
       await db.edit(req.params.id, req.body.name.trim(), type);
@@ -33,7 +35,9 @@ function createController(type) {
       const errors = validationResult(req);
 
       if (!errors.isEmpty()) {
-        return res.status(400).render("errors", { errors: errors.array() });
+        return res
+          .status(400)
+          .render("errors", { errors: errors.array(), goBack: `/${type}` });
       }
 
       await db.add(req.body.name.trim(), type);

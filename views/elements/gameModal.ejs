@@ -7,17 +7,23 @@
   >
     <div>
       <label for="title">Title</label>
-      <input name="title" id="title" type="text" required minlength="3"/>
+      <input name="title" id="title" type="text" required minlength="3" />
       <span id="titleError"></span>
     </div>
     <div>
       <label for="releseDate">Release Date</label>
-      <input name="releseDate" id="releseDate" type="date" required/>
+      <input name="releaseDate" id="releaseDate" type="date" required />
       <span id="releaseDateError"></span>
     </div>
     <div>
       <label for="description">Game Description</label>
-      <textarea name="description" id="description" type="date" required minlength="15"></textarea>
+      <textarea
+        name="description"
+        id="description"
+        type="date"
+        required
+        minlength="15"
+      ></textarea>
       <span id="descriptionError"></span>
     </div>
     <div>
@@ -39,6 +45,7 @@
         accept="image/png, image/jpeg, image/webp"
         name="gameImg"
         id="gameImg"
+        required
       />
       <span id="gameImgError"></span>
     </div>

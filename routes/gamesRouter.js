@@ -7,10 +7,16 @@ const gamesRouter = Router();
 gamesRouter.get("/", gamesController.getAllGames);
 gamesRouter.get("/:id", gamesController.getGameById);
 gamesRouter.post(
-	"/add",
-	upload.single("gameImg"),
-	gamesController.validationRules,
-	gamesController.addGame,
+  "/add",
+  upload.single("gameImg"),
+  gamesController.validationRules,
+  gamesController.addGame,
+);
+gamesRouter.post(
+  "/:id/edit",
+  upload.single("gameImg"),
+  gamesController.validationRules,
+  gamesController.updateGame,
 );
 
 module.exports = gamesRouter;

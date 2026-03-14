@@ -49,20 +49,25 @@ function emptyForm() {
   releaseDateInput.value = "";
   descriptionTextArea.value = "";
   //Empty error messages
-
 }
 
 // This is for the btn to add a new game
 const modal = document.getElementById("gameModal");
 const titleInput = document.getElementById("title");
-const releaseDateInput = document.getElementById("releseDate");
+const releaseDateInput = document.getElementById("releaseDate");
 const descriptionTextArea = document.getElementById("description");
 const categoriesFieldset = document.getElementById("categoriesFieldset");
 const developersSelect = document.getElementById("developer");
+const gameImgInput = document.getElementById("gameImg");
+
+//Event to open modal to add a new game
 document.getElementById("addGameBtn").addEventListener("click", async () => {
   //we need to fetch the categories and developers info when the user clicks the button because the could have been changes between first loaded the page and clicked add btn
   const categories = await fetchData("/categories/info");
   const developers = await fetchData("/developers/info");
+
+  gameForm.setAttribute("action", `/games/add`);
+  gameImgInput.required = true;
 
   //Clear form
   emptyForm();
@@ -85,6 +90,9 @@ async function openGameEditModal(id) {
   //Clear form
   emptyForm();
 
+  gameForm.setAttribute("action", `/games/${id}/edit`);
+  gameImgInput.required = false;
+
   const categories = await fetchData("/categories/info");
   const developers = await fetchData("/developers/info");
 
@@ -97,7 +105,6 @@ async function openGameEditModal(id) {
 
   //Add developers to the select
   if (developers) {
-    console.log(gameInfo.developer_id);
     addDevelopers(developers, developersSelect, gameInfo.developer_id);
   }
 
@@ -119,7 +126,7 @@ gameForm.addEventListener("submit", async (e) => {
   const category = formData.getAll("category");
 
   //validate categories
-  if (category.legnth === 0) { 
+  if (category.legnth === 0) {
     categoriesError.textContent = "Please, select at least one category";
   } else {
     gameForm.submit();

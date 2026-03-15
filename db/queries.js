@@ -6,15 +6,17 @@ async function getAll(table) {
 }
 
 async function getById(id, table) {
-  const { rows } = await pool.query(`SELECT * FROM ${table} WHERE id = $1`, [id]);
+  const { rows } = await pool.query(`SELECT * FROM ${table} WHERE id = $1`, [
+    id,
+  ]);
   return rows[0];
 }
 
 async function edit(id, newName, table) {
-  await pool.query(
-    `UPDATE ${table} SET name = $1 WHERE id = $2`,
-    [newName, id],
-  );
+  await pool.query(`UPDATE ${table} SET name = $1 WHERE id = $2`, [
+    newName,
+    id,
+  ]);
 }
 
 async function add(name, table) {
@@ -22,8 +24,37 @@ async function add(name, table) {
 }
 
 async function deleteElement(id, table) {
-  await pool.query(`DELETE FROM ${table} WHERE id = $1`, [id]);
+  const deleteQuery = `DELETE FROM ${table} WHERE id = $1`;
+
+  //For categories we will need to run two queries instead of one
+  //One to delete category and one to delete all rows that had that category in games_category table
+  if (table === "categories") {
+    const client = await pool.connect();
+    try {
+      await client.query("BEGIN");
+
+      //Delete games that had the category we want to delete in games_categories table
+      await pool.query(
+        `
+          DELETE FROM games_categories WHERE category_id = $1
+          `,
+        [id],
+      );
+
+      await client.query(deleteQuery, [id]);
+      await client.query("COMMIT");
+    } catch (err) {
+      await client.query("ROLLBACK");
+      throw err;
+    } finally {
+      client.release();
+    }
+  } else {
+    await pool.query(deleteQuery, [id]);
+  }
 }
+
+async function deleteGameCategories(id) {}
 
 module.exports = {
   getAll,
@@ -31,4 +62,5 @@ module.exports = {
   edit,
   add,
   deleteElement,
+  deleteGameCategories,
 };

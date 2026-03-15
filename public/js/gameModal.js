@@ -119,14 +119,14 @@ async function openGameEditModal(id) {
 // Form submission
 const gameForm = document.getElementById("gameForm");
 
-gameForm.addEventListener("submit", async (e) => {
+gameForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
   const formData = new FormData(e.target);
   const category = formData.getAll("category");
 
   //validate categories
-  if (category.legnth === 0) {
+  if (category.length === 0) {
     categoriesError.textContent = "Please, select at least one category";
   } else {
     gameForm.submit();

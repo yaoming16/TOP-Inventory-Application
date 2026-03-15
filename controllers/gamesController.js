@@ -100,10 +100,16 @@ async function addGame(req, res) {
   return res.sendStatus(200);
 }
 
+async function deleteGame(req, res) {
+  await gameDB.deleteGame(req.params.id);
+  return res.status(200).json({ success: true });
+}
+
 module.exports = {
   getAllGames,
   addGame,
   getGameById,
   updateGame,
+  deleteGame,
   validationRules,
 };

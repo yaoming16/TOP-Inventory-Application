@@ -13,5 +13,8 @@ const formatedDate = date.toLocaleDateString();
     <p><%= category %></p>
     <% }) %>
   </div>
-  <button onclick="openGameEditModal('<%= gameInfo.id %>')">Edit</button>
+  <div>
+    <button onclick="openGameEditModal('<%= gameInfo.id %>')">Edit</button>
+    <button class="deleteBtn" id="<%= gameInfo.id %>">Delete</button>
+  </div>
 </article>

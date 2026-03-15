@@ -18,5 +18,6 @@ gamesRouter.post(
   gamesController.validationRules,
   gamesController.updateGame,
 );
+gamesRouter.delete("/:id/delete", gamesController.deleteGame);
 
 module.exports = gamesRouter;

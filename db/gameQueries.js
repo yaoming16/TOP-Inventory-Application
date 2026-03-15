@@ -76,6 +76,17 @@ async function addCategoriesToGame(client, gameId, categories) {
   );
 }
 
+//Query to delete game categories of a game
+async function deleteGameCategories(client, gameId) {
+  await client.query(
+    `
+    DELETE FROM games_categories
+    WHERE game_id = $1
+    `,
+    [gameId],
+  );
+}
+
 async function updateGame(gameInfo) {
   const { title, releaseDate, description, imgLink, developer, category, id } =
     gameInfo;
@@ -87,7 +98,12 @@ async function updateGame(gameInfo) {
     await client.query("BEGIN");
     //Update game
     // Build SET clause and parameters safely to avoid SQL syntax errors when imgLink is absent
-    const setClauses = ["title = $1", "release = $2", "description = $3", "developer_id = $4"];
+    const setClauses = [
+      "title = $1",
+      "release = $2",
+      "description = $3",
+      "developer_id = $4",
+    ];
     const params = [title, releaseDate, description, developer];
     if (imgLink) {
       params.push(imgLink);
@@ -103,13 +119,7 @@ async function updateGame(gameInfo) {
     await client.query(updateQuery, params);
 
     //Delete old categories related to this game
-    await client.query(
-      `
-      DELETE FROM games_categories
-      WHERE game_id = $1
-      `,
-      [id],
-    );
+    await deleteGameCategories(client, id);
 
     //Insert new categories
     await addCategoriesToGame(client, id, category);
@@ -157,10 +167,34 @@ async function addGame(newGameInfo) {
   }
 }
 
+async function deleteGame(id) {
+  const client = await pool.connect();
+
+  try {
+    await client.query("BEGIN");
+    //delete game categories
+    await deleteGameCategories(client, id);
+    //delete game itself
+    await client.query(
+      `
+      DELETE FROM games
+      WHERE id = $1
+      `,
+      [id],
+    );
+    await client.query("COMMIT");
+  } catch (err) {
+    await client.query("ROLLBACK");
+  } finally {
+    client.release();
+  }
+}
+
 module.exports = {
   getAllGamesInfo,
   getAllCategoriesOfAGame,
   getGameInfo,
   addGame,
   updateGame,
+  deleteGame,
 };

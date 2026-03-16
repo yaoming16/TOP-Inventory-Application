@@ -1,0 +1,230 @@
+:root {
+  --color-bg: #121826;
+  --color-surface: #1b2336;
+  --color-surface-elevated: #24304a;
+  --color-surface-elevated-hover: #2c3a5a;
+  --color-primary: #5865f2;
+  --color-primary-hover: #4753d1;
+  --color-accent: #00c2a8;
+  --color-accent-soft: #3bd4bf;
+  --color-text: #f4f7ff;
+  --color-text-muted: #b6c0d9;
+  --color-border: #34415f;
+  --color-btn-primary: #ff8a5b;
+  --color-btn-primary-hover: #f5743f;
+  --color-btn-primary-text: #fff8f4;
+  --color-btn-secondary: #2f9fb5;
+  --color-btn-secondary-hover: #25879a;
+  --color-btn-secondary-text: #f4fbff;
+  --color-btn-ghost: #2b3550;
+  --color-btn-ghost-hover: #354264;
+  --color-btn-ghost-text: #dfe7fb;
+  --color-success: #27c46b;
+  --color-warning: #f4b740;
+  --color-danger: #ef5b6c;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  padding: 2rem;
+  flex: 1;
+}
+
+li {
+  list-style: none;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--color-text)
+}
+
+h2 {
+  font-size: 1.75rem;
+  color: var(--color-text)
+}
+
+button {
+  background-color: var(--color-btn-secondary);
+  color: var(--color-btn-secondary-text);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+button:hover {
+  background-color: var(--color-btn-secondary-hover);
+  scale: 1.05;
+}
+
+.deleteBtn {
+  background-color: var(--color-btn-primary);
+  color: var(--color-btn-primary-text);
+}
+
+.deleteBtn:hover {
+  background-color: var(--color-btn-primary-hover);
+  scale: 1.05;
+}
+
+dialog {
+  background-color: var(--color-surface-elevated);
+  border-radius: 10px;
+  border: 2px solid var(--color-border);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  margin: auto auto;
+}
+
+dialog h2 {
+  margin-bottom: 1rem;
+}
+
+/* Footer */
+.footer {
+  background-color: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  padding: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem 2.5rem;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+.footer a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+.footer a:hover {
+  color: var(--color-accent-soft);
+  text-decoration: underline;
+}
+
+/* Form elements */
+input {
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: 5px;
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  transition: all 0.3s ease-in-out;
+}
+
+input:focus {
+  border-color: var(--color-primary);
+  outline: none;
+}
+
+textarea {
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: 5px;
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  transition: all 0.3s ease-in-out;
+}
+
+textarea:focus {
+  border-color: var(--color-primary);
+  outline: none;
+}
+
+select {
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: 5px;
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  transition: all 0.3s ease-in-out;
+}
+
+select:focus {
+  border-color: var(--color-primary);
+  outline: none;
+}
+
+input[type="checkbox"] {
+  width: auto;
+  margin-right: 0.5rem;
+}
+
+label {
+  margin-bottom: 0.5rem;
+  display: block;
+  color: var(--color-text-muted);
+}
+
+.btnModalDiv {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  justify-content: space-around;
+}
+
+/* Navigation styles */
+
+nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--color-primary);
+  font-size: 1.125rem;
+  transition: all 0.3s ease-in-out;
+}
+
+nav li {
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  transition: all 0.3s ease-in-out;
+}
+
+nav li:hover {
+  background-color: var(--color-surface-elevated);
+  scale: 1.05;
+}
+
+nav a:hover {
+  color: var(--color-accent-soft);
+
+}
+
+.navLinksContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 1rem;
+}
+

@@ -95,7 +95,7 @@ async function updateGame(req, res) {
     }
   }
 
-  return res.status(200);
+  return res.sendStatus(200);
 }
 
 async function addGame(req, res) {

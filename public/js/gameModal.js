@@ -11,6 +11,7 @@ async function fetchData(link) {
 function addCategories(categories, categoriesFieldset, gameCategories = []) {
   categories.forEach((cat) => {
     const div = document.createElement("div");
+    div.classList.add("categoryDiv");
 
     const label = document.createElement("label");
     label.setAttribute("for", `${cat.name}`);

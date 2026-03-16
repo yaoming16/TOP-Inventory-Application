@@ -3,6 +3,13 @@ async function openEditModal(type, mode, id = null) {
   let formAction;
 
   let input = document.getElementById("nameInput");
+  let title = document.getElementById("modalTitle");
+
+  if (type === "categories") {
+    title.textContent = "Add a new Category";
+  } else {
+    title.textContent = "Add a new Developer";
+  }
 
   if (mode === "edit") {
     url = `${type}/${id}`;

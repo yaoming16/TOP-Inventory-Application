@@ -1,0 +1,34 @@
+ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+ul li {
+  background-color: var(--color-surface-elevated);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+  max-width: 600px;
+}
+
+ul li:hover {
+  background-color: var(--color-surface-elevated-hover);
+  scale: 1.05;
+}
+
+li article {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  padding: 2rem;
+  justify-content: space-between;
+}
+
+.btnDiv {
+  display: flex;
+  flex-direction: row;
+  gap: 0.25rem;
+}

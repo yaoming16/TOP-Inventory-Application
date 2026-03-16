@@ -3,12 +3,31 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Games Inventory</title>
+    <link href="/styles/index.css" rel="stylesheet" />
+    <title>PixelVault</title>
   </head>
   <body>
     <%- include("./elements/nav.ejs") %>
     <main>
-      <h1>Games Inventory</h1>
+      <h1>PixelVault</h1>
+      <section>
+        <div>
+          <p>Games:</p>
+          <p><%= totals.games %></p>
+        </div>
+        <div>
+          <p>Categories:</p>
+          <p><%= totals.categories %></p>
+        </div>
+        <div>
+          <p>Game Developers:</p>
+          <p><%= totals.developers %></p>
+        </div>
+      </section>
+      <section>
+        
+      </section>
     </main>
+    <%- include("./elements/footer") %>
   </body>
 </html>

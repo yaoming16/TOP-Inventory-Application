@@ -5,15 +5,16 @@
     action="/games/add"
     enctype="multipart/form-data"
   >
+    <h2>Add a new Game</h2>
     <div>
       <label for="title">Title</label>
       <input name="title" id="title" type="text" required minlength="3" />
-      <span id="titleError"></span>
+      <span id="titleError" class="errorSpan"></span>
     </div>
     <div>
       <label for="releseDate">Release Date</label>
       <input name="releaseDate" id="releaseDate" type="date" required />
-      <span id="releaseDateError"></span>
+      <span id="releaseDateError" class="errorSpan"></span>
     </div>
     <div>
       <label for="description">Game Description</label>
@@ -24,19 +25,19 @@
         required
         minlength="15"
       ></textarea>
-      <span id="descriptionError"></span>
+      <span id="descriptionError" class="errorSpan"></span>
     </div>
     <div>
       <fieldset>
         <legend>Categories</legend>
         <div id="categoriesFieldset"></div>
-        <span id="categoriesError"></span>
+        <span id="categoriesError" class="errorSpan"></span>
       </fieldset>
     </div>
     <div>
       <label for="developer">Developer</label>
       <select name="developer" id="developer" required></select>
-      <span id="developerError"></span>
+      <span id="developerError" class="errorSpan"></span>
     </div>
     <div>
       <label for="gameImg">Game Image</label>
@@ -49,12 +50,14 @@
       />
       <span id="gameImgError"></span>
     </div>
-    <button type="submit">Save</button>
-    <button
-      type="button"
-      onclick="document.getElementById('gameModal').close()"
-    >
-      Cancel
-    </button>
+    <div class="btnModalDiv">
+      <button type="submit">Save</button>
+      <button
+        type="button"
+        onclick="document.getElementById('gameModal').close()"
+      >
+        Cancel
+      </button>
+    </div>
   </form>
 </dialog>

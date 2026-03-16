@@ -1,5 +1,8 @@
-function getHomePage(req, res) {
-  res.render("homepage", {});
+const db = require("../db/queries");
+
+async function getHomePage(req, res) {
+  const totals = await db.getTotals();
+  res.render("homepage", {totals});
 }
 
 module.exports = {getHomePage};

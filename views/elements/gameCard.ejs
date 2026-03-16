@@ -2,19 +2,32 @@
 const formatedDate = date.toLocaleDateString();
 %>
 
-<article>
+<article class="">
   <img src="<%= gameInfo.image_link %>" />
   <h2><%= gameInfo.title %></h2>
-  <p><%= gameInfo.description %></p>
-  <p><%= formatedDate %></p>
-  <p><%= gameInfo.developer %></p>
-  <div>
-    <% (gameInfo.categories || []).forEach(category => { %>
-    <p><%= category %></p>
-    <% }) %>
-  </div>
-  <div>
-    <button onclick="openGameEditModal('<%= gameInfo.id %>')">Edit</button>
-    <button class="deleteBtn" id="<%= gameInfo.id %>">Delete</button>
+  <div class="allInfoContainer">
+    <p><%= gameInfo.description %></p>
+    <dl class="infoContainer">
+      <div class="dlContainer">
+        <dt>Release Date:</dt>
+        <dd><%= formatedDate %></dd>
+      </div>
+      <div class="dlContainer">
+        <dt>Developer:</dt>
+        <dd><%= gameInfo.developer %></dd>
+      </div>
+      <div class="dlContainer">
+        <dt>Categories:</dt>
+        <dd class="categoryDD">
+          <% (gameInfo.categories || []).forEach(category => { %>
+          <p><%= category %></p>
+          <% }) %>
+        </dd>
+      </div>
+    </dl>
+    <div class="btnGroup">
+      <button onclick="openGameEditModal('<%= gameInfo.id %>')">Edit</button>
+      <button class="deleteBtn" id="<%= gameInfo.id %>">Delete</button>
+    </div>
   </div>
 </article>

@@ -4,7 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="/js/modal.js" defer></script>
-    <title><%= title %> - Games Inventory</title>
+    <link href="/styles/index.css" rel="stylesheet" />
+    <link href="/styles/categoriesTemplate.css" rel="stylesheet" />
+    <title><%= title %> - PixelVault</title>
   </head>
   <body>
     <%- include("./elements/nav.ejs") %>
@@ -22,6 +24,7 @@
       </ul>
       <%- include("./elements/simpleModal.ejs") %>
     </main>
+    <%- include("./elements/footer") %>
   </body>
 </html>
 

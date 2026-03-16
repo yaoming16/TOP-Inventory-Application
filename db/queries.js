@@ -54,6 +54,23 @@ async function deleteElement(id, table) {
   }
 }
 
+async function getTotals() {
+  const categories  = await pool.query(
+    `SELECT COUNT(DISTINCT name) FROM categories`,
+  );
+  const  developers  = await pool.query(
+    `SELECT COUNT(DISTINCT name) FROM developers`,
+  );
+  const  games  = await pool.query(`SELECT COUNT(DISTINCT id) FROM games`);
+  console.log(games)
+
+  return {
+    categories: categories.rows[0].count,
+    developers: developers.rows[0].count,
+    games: games.rows[0].count,
+  };
+}
+
 async function deleteGameCategories(id) {}
 
 module.exports = {
@@ -63,4 +80,5 @@ module.exports = {
   add,
   deleteElement,
   deleteGameCategories,
+  getTotals,
 };

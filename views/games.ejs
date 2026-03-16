@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="/js/gameModal.js" defer></script>
     <script src="/js/games.js" defer></script>
-    <title>Games - Games Inventory</title>
+    <link href="/styles/index.css" rel="stylesheet" />
+    <link href="/styles/games.css" rel="stylesheet" />
+    <title>Games - PixelVault</title>
   </head>
   <body>
     <%- include("./elements/nav.ejs") %>
@@ -15,11 +17,12 @@
       <%- include("./elements/gameModal.ejs") %>
       <ul id="gamesContainer">
         <% for (let i = 0; i < gamesInfo.length; i++) { %>
-        <li>
+        <li class="gameCard">
           <%- include("./elements/gameCard.ejs", {gameInfo: gamesInfo[i]}) %>
         </li>
         <%} %>
       </ul>
     </main>
+    <%- include("./elements/footer") %>
   </body>
 </html>

@@ -67,12 +67,14 @@ async function getAllCategoriesOfAGame(id) {
 
 //Query to add categories to a game
 async function addCategoriesToGame(client, gameId, categories) {
+  const categoryArray = Array.isArray(categories) ? categories : [categories];
+
   await client.query(
     `
       INSERT INTO games_categories (game_id, category_id)
       SELECT $1, UNNEST($2::int[]);
     `,
-    [gameId, categories],
+    [gameId, categoryArray],
   );
 }
 
@@ -135,7 +137,7 @@ async function updateGame(gameInfo) {
 }
 
 async function addGame(newGameInfo) {
-  const { title, releseDate, description, imgLink, developer, category } =
+  const { title, releaseDate, description, imgLink, developer, category } =
     newGameInfo;
 
   //create connection to the db. Need this to use the same connection for all queries that follow instead of multiple by calling pool.query
@@ -150,7 +152,7 @@ async function addGame(newGameInfo) {
       INSERT INTO games (title, release, description, image_link, developer_id)
       VALUES ($1, $2, $3, $4, $5) RETURNING id
       `,
-      [title, releseDate, description, imgLink, developer],
+      [title, releaseDate, description, imgLink, developer],
     );
     const gameId = rows[0].id;
 

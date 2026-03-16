@@ -19,7 +19,8 @@ function addCategories(categories, categoriesFieldset, gameCategories = []) {
     const input = document.createElement("input");
     input.type = "checkbox";
     input.name = "category";
-    input.checked = gameCategories.includes(cat.name) ? true : false;
+    input.checked =
+      gameCategories && gameCategories.includes(cat.name) ? true : false;
     input.id = cat.name;
     input.value = cat.id;
 
@@ -119,7 +120,7 @@ async function openGameEditModal(id) {
 // Form submission
 const gameForm = document.getElementById("gameForm");
 
-gameForm.addEventListener("submit", (e) => {
+gameForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const formData = new FormData(e.target);
@@ -129,7 +130,13 @@ gameForm.addEventListener("submit", (e) => {
   if (category.length === 0) {
     categoriesError.textContent = "Please, select at least one category";
   } else {
-    gameForm.submit();
+    let res = await fetch(gameForm.getAttribute("action"), {
+      method: "POST",
+      body: formData,
+    });
+    if (res.ok) {
+      window.location.reload();
+    }
   }
 });
 

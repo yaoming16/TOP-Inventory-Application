@@ -95,7 +95,6 @@ async function addGame(req, res) {
 
   //We need to convert, name and save the image the user uploads
   const imgLink = await formatImg(req.file);
-
   await gameDB.addGame({ ...req.body, imgLink });
   return res.sendStatus(200);
 }

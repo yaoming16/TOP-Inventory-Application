@@ -118,7 +118,7 @@ async function updateGame(gameInfo) {
       SET ${setClauses.join(", ")}
       WHERE id = $${params.length}
     `;
-    await client.query(updateQuery, params);
+    const { rows } = await client.query(updateQuery, params);
 
     //Delete old categories related to this game
     await deleteGameCategories(client, id);
@@ -127,6 +127,7 @@ async function updateGame(gameInfo) {
     await addCategoriesToGame(client, id, category);
 
     await client.query("COMMIT");
+    return rows[0];
   } catch (err) {
     await client.query("ROLLBACK");
     throw err;
@@ -171,22 +172,24 @@ async function addGame(newGameInfo) {
 
 async function deleteGame(id) {
   const client = await pool.connect();
-
   try {
     await client.query("BEGIN");
     //delete game categories
     await deleteGameCategories(client, id);
     //delete game itself
-    await client.query(
+    const { rows } = await client.query(
       `
       DELETE FROM games
       WHERE id = $1
+      RETURNING image_link
       `,
       [id],
     );
     await client.query("COMMIT");
+    return rows[0];
   } catch (err) {
     await client.query("ROLLBACK");
+    throw err;
   } finally {
     client.release();
   }

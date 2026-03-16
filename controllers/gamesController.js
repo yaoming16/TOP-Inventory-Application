@@ -54,7 +54,7 @@ async function formatImg(file) {
     `${imgId}.webp`,
   );
   await sharp(file.buffer).toFormat("webp").toFile(imagePath);
-  return `/images/${imgId}`;
+  return `/images/${imgId}.webp`;
 }
 
 async function updateGame(req, res) {
@@ -69,12 +69,33 @@ async function updateGame(req, res) {
   // If no file in req.file means user didnt selected a file to update the current one so we dont need to update link in db
   // That is why we set imgLink to null
   let imgLink = null;
+  let oldImgLink = null;
+
   if (req.file) {
     imgLink = await formatImg(req.file);
+
+    const oldGame = await gameDB.getGameInfo(req.params.id);
+    if (oldGame) oldImgLink = oldGame.image_link;
   }
 
-  await gameDB.updateGame({ ...req.body, imgLink, id: req.params.id });
-  return res.sendStatus(200);
+  // Update the game in the database regardless of whether an image was uploaded
+  await gameDB.updateGame({
+    ...req.body,
+    imgLink,
+    id: req.params.id,
+  });
+
+  // If a new image was uploaded and an old image exists, delete the old one
+  if (req.file && oldImgLink) {
+    const imgPath = path.join(__dirname, "..", "public", oldImgLink);
+    try {
+      await fs.promises.unlink(imgPath);
+    } catch (err) {
+      console.error("Error updating the game image", err);
+    }
+  }
+
+  return res.status(200);
 }
 
 async function addGame(req, res) {
@@ -100,8 +121,20 @@ async function addGame(req, res) {
 }
 
 async function deleteGame(req, res) {
-  await gameDB.deleteGame(req.params.id);
-  return res.status(200).json({ success: true });
+  const response = await gameDB.deleteGame(req.params.id);
+  //Delete image in the server
+  const imgPath = path.join(
+    __dirname,
+    "..",
+    "public",
+    `${response.image_link}`,
+  );
+  try {
+    await fs.promises.unlink(imgPath);
+    return res.status(200).json({ success: true });
+  } catch (err) {
+    console.error("Error updating the game image", err);
+  }
 }
 
 module.exports = {

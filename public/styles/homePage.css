@@ -1,0 +1,18 @@
+.recentGameCard {
+  background-color: var(--color-surface-elevated);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+}
+
+.recentGameCard:hover {
+  background-color: var(--color-surface-elevated-hover);
+  scale: 1.05;
+}
+
+.cardsContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  padding: 16px;
+}

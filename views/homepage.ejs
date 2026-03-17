@@ -4,28 +4,42 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/styles/index.css" rel="stylesheet" />
+    <link href="/styles/games.css" rel="stylesheet" />
+    <link href="/styles/homePage.css" rel="stylesheet" />
     <title>PixelVault</title>
   </head>
   <body>
     <%- include("./elements/nav.ejs") %>
     <main>
       <h1>PixelVault</h1>
-      <section>
-        <div>
+      <p>
+        Welcome to PixelVault, your ultimate database for cataloging video
+        games. Easily manage and explore an expanding collection of games,
+        vibrant categories, and industry-leading developers all in one place.
+      </p>
+      <section class="cardsContainer">
+        <div class="recentGameCard">
           <p>Games:</p>
           <p><%= totals.games %></p>
         </div>
-        <div>
+        <div class="recentGameCard">
           <p>Categories:</p>
           <p><%= totals.categories %></p>
         </div>
-        <div>
+        <div class="recentGameCard">
           <p>Game Developers:</p>
           <p><%= totals.developers %></p>
         </div>
       </section>
       <section>
-        
+        <h2>Recently Added Games</h2>
+        <ul id="gamesContainer" class="homeCont">
+          <% lastGames.forEach((game) => { %>
+          <li class="gameCard homeCard">
+            <%- include("./elements/gameCard.ejs", {gameInfo: game}) %>
+          </li>
+          <% }) %>
+        </ul>
       </section>
     </main>
     <%- include("./elements/footer") %>

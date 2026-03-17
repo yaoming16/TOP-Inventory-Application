@@ -1,7 +1,6 @@
 #gamesContainer {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  justify-content: center;
   gap: 20px;
   padding: 20px;
 }
@@ -12,6 +11,10 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease-in-out;
   max-width: 600px;
+}
+
+.homeCard {
+  max-width: 350px;
 }
 
 .gameCard:hover {
@@ -35,7 +38,7 @@
 .infoContainer {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem
+  gap: 0.5rem;
 }
 
 .allInfoContainer {
@@ -50,7 +53,6 @@
   flex-direction: row;
   width: 100%;
   justify-content: space-between;
-
 }
 
 .categoryDD {
@@ -86,7 +88,7 @@ legend {
 }
 
 .errorSpan {
-  display: block; 
+  display: block;
   color: var(--color-danger);
   font-size: 0.875rem;
   margin-bottom: 0.5rem;

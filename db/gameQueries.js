@@ -22,6 +22,32 @@ async function getAllGamesInfo() {
   return rows;
 }
 
+async function getLastGames(limit = 1) {
+  const { rows } = await pool.query(
+    `
+    SELECT
+      g.id,
+      g.title,
+      g.description,
+      g.release,
+      g.image_link,
+      d.name AS developer,
+    COALESCE(
+    ARRAY_AGG(c.name ORDER BY c.name) FILTER (WHERE c.id IS NOT NULL)
+    ) AS categories
+    FROM games AS G
+    LEFT JOIN games_categories gc ON gc.game_id = g.id
+    LEFT JOIN categories c ON c.id = gc.category_id
+    LEFT JOIN developers d ON d.id = g.developer_id
+    GROUP BY g.id, g.title, d.name
+    ORDER BY g.id DESC
+    LIMIT $1;
+    `,
+    [limit],
+  );
+  return rows;
+}
+
 async function getGameInfo(id) {
   const { rows } = await pool.query(
     `
@@ -202,4 +228,5 @@ module.exports = {
   addGame,
   updateGame,
   deleteGame,
+  getLastGames,
 };

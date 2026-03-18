@@ -12,24 +12,24 @@
     <%- include("./elements/nav.ejs") %>
     <main>
       <h1>PixelVault</h1>
-      <p>
+      <p class="titleDescription">
         Welcome to PixelVault, your ultimate database for cataloging video
         games. Easily manage and explore an expanding collection of games,
         vibrant categories, and industry-leading developers all in one place.
       </p>
       <section class="cardsContainer">
-        <div class="recentGameCard">
-          <p>Games:</p>
-          <p><%= totals.games %></p>
-        </div>
-        <div class="recentGameCard">
-          <p>Categories:</p>
-          <p><%= totals.categories %></p>
-        </div>
-        <div class="recentGameCard">
-          <p>Game Developers:</p>
-          <p><%= totals.developers %></p>
-        </div>
+        <a href="/games" class="totalCard">
+          <p class="totalTitle">Games</p>
+          <p class="totalNumber"><%= totals.games %></p>
+        </a>
+        <a href="/categories" class="totalCard">
+          <p class="totalTitle">Categories</p>
+          <p class="totalNumber"><%= totals.categories %></p>
+        </a>
+        <a href="/developers" class="totalCard">
+          <p class="totalTitle">Developers</p>
+          <p class="totalNumber"><%= totals.developers %></p>
+        </a>
       </section>
       <section>
         <h2>Recently Added Games</h2>

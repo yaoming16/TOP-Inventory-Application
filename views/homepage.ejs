@@ -36,7 +36,8 @@
         <ul id="gamesContainer" class="homeCont">
           <% lastGames.forEach((game) => { %>
           <li class="gameCard homeCard">
-            <%- include("./elements/gameCard.ejs", {gameInfo: game}) %>
+            <%- include("./elements/gameCard.ejs", {gameInfo: game, showBtn:
+            false}) %>
           </li>
           <% }) %>
         </ul>

@@ -2,8 +2,17 @@ const gameDB = require("../db/gameQueries");
 const sharp = require("sharp");
 const path = require("path");
 const fs = require("fs");
+const cloudinary = require("cloudinary").v2;
 const { randomUUID } = require("crypto");
 const { validationResult, body } = require("express-validator");
+
+require("dotenv").config();
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_KEY,
+  api_secret: process.env.CLOUDINARY_SECRET,
+});
 
 const validationRules = [
   body("title")
@@ -30,6 +39,24 @@ const validationRules = [
   body("category").notEmpty().withMessage("Category is required"),
 ];
 
+function uploadToCloudinary(fileBuffer, imageName) {
+  return new Promise((resolve, reject) => {
+    const options = { folder: "inventory_games" };
+    if (imageName) {
+      options.public_id = imageName;
+    }
+
+    const uploadStream = cloudinary.uploader.upload_stream(
+      options,
+      (error, result) => {
+        if (error) return reject(error);
+        resolve(result);
+      },
+    );
+    uploadStream.end(fileBuffer);
+  });
+}
+
 async function getAllGames(req, res) {
   const data = await gameDB.getAllGamesInfo();
   let toReturn = {
@@ -43,20 +70,6 @@ async function getGameById(req, res) {
   return res.status(200).json(info);
 }
 
-//Function to convert, name and save the image
-async function formatImg(file) {
-  const imgId = randomUUID();
-  const imagePath = path.join(
-    __dirname,
-    "..",
-    "public",
-    "images",
-    `${imgId}.webp`,
-  );
-  await sharp(file.buffer).toFormat("webp").toFile(imagePath);
-  return `/images/${imgId}.webp`;
-}
-
 async function updateGame(req, res) {
   const errors = validationResult(req);
 
@@ -66,17 +79,8 @@ async function updateGame(req, res) {
       .render("errors", { errors: errors.array(), goBack: "/games" });
   }
 
-  // If no file in req.file means user didnt selected a file to update the current one so we dont need to update link in db
-  // That is why we set imgLink to null
+  // Img link won't change so we cant start it as null
   let imgLink = null;
-  let oldImgLink = null;
-
-  if (req.file) {
-    imgLink = await formatImg(req.file);
-
-    const oldGame = await gameDB.getGameInfo(req.params.id);
-    if (oldGame) oldImgLink = oldGame.image_link;
-  }
 
   // Update the game in the database regardless of whether an image was uploaded
   await gameDB.updateGame({
@@ -85,14 +89,15 @@ async function updateGame(req, res) {
     id: req.params.id,
   });
 
-  // If a new image was uploaded and an old image exists, delete the old one
-  if (req.file && oldImgLink) {
-    const imgPath = path.join(__dirname, "..", "public", oldImgLink);
-    try {
-      await fs.promises.unlink(imgPath);
-    } catch (err) {
-      console.error("Error updating the game image", err);
-    }
+  // If req.file exists we upload the new image that will replace the old one.
+  // To do that we need to fetch the current img link from db to get the image name in cloudinary.
+  // Img link wont change so we dont need to update link in db
+  if (req.file) {
+    response = await gameDB.getGameInfo(req.params.id);
+    imgLink = response.image_link;
+    const imgName = imgLink.split("/").pop().split(".")[0];
+    const processedBuffer = await sharp(req.file.buffer).webp().toBuffer();
+    const uploadResult = await uploadToCloudinary(processedBuffer, imgName);
   }
 
   return res.sendStatus(200);
@@ -115,7 +120,14 @@ async function addGame(req, res) {
   }
 
   //We need to convert, name and save the image the user uploads
-  const imgLink = await formatImg(req.file);
+  const processedBuffer = await sharp(req.file.buffer).webp().toBuffer();
+
+  // Use randomUUID to generate a unique name for the image
+  const imgId = randomUUID();
+  const uploadResult = await uploadToCloudinary(processedBuffer, imgId);
+
+  const imgLink = uploadResult.secure_url;
+
   await gameDB.addGame({ ...req.body, imgLink });
   return res.sendStatus(200);
 }

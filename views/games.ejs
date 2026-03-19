@@ -18,7 +18,8 @@
       <ul id="gamesContainer">
         <% for (let i = 0; i < gamesInfo.length; i++) { %>
         <li class="gameCard">
-          <%- include("./elements/gameCard.ejs", {gameInfo: gamesInfo[i]}) %>
+          <%- include("./elements/gameCard.ejs", {gameInfo: gamesInfo[i],
+          showBtn: true}) %>
         </li>
         <%} %>
       </ul>

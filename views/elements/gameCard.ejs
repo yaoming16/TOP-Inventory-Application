@@ -27,9 +27,11 @@ const formatedDate = date.toLocaleDateString();
         </div>
       </dl>
     </div>
+    <% if(showBtn) { %>
     <div class="btnGroup">
       <button onclick="openGameEditModal('<%= gameInfo.id %>')">Edit</button>
       <button class="deleteBtn" id="<%= gameInfo.id %>">Delete</button>
     </div>
+    <%}%>
   </div>
 </article>

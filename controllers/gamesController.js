@@ -2,17 +2,15 @@ const gameDB = require("../db/gameQueries");
 const sharp = require("sharp");
 const path = require("path");
 const fs = require("fs");
-const cloudinary = require("cloudinary").v2;
 const { randomUUID } = require("crypto");
 const { validationResult, body } = require("express-validator");
+const {
+  uploadToCloudinary,
+  deleteCloudinaryImg,
+  extractImgName,
+} = require("../cloudinary/coudinary");
 
 require("dotenv").config();
-
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_NAME,
-  api_key: process.env.CLOUDINARY_KEY,
-  api_secret: process.env.CLOUDINARY_SECRET,
-});
 
 const validationRules = [
   body("title")
@@ -39,24 +37,6 @@ const validationRules = [
   body("category").notEmpty().withMessage("Category is required"),
 ];
 
-function uploadToCloudinary(fileBuffer, imageName) {
-  return new Promise((resolve, reject) => {
-    const options = { folder: "inventory_games" };
-    if (imageName) {
-      options.public_id = imageName;
-    }
-
-    const uploadStream = cloudinary.uploader.upload_stream(
-      options,
-      (error, result) => {
-        if (error) return reject(error);
-        resolve(result);
-      },
-    );
-    uploadStream.end(fileBuffer);
-  });
-}
-
 async function getAllGames(req, res) {
   const data = await gameDB.getAllGamesInfo();
   let toReturn = {
@@ -82,23 +62,24 @@ async function updateGame(req, res) {
   // Img link won't change so we cant start it as null
   let imgLink = null;
 
+  // If req.file exists we upload the new image that will replace the old one.
+  // To do that we need to fetch the current img link from db to get the image name in cloudinary.
+  // Img link wont change so we dont need to update link in db
+  if (req.file) {
+    response = await gameDB.getGameInfo(req.params.id);
+    let oldImgLink = response.image_link;
+    const imgName = extractImgName(oldImgLink);
+    const processedBuffer = await sharp(req.file.buffer).webp().toBuffer();
+    const uploadResult = await uploadToCloudinary(processedBuffer, imgName);
+    imgLink = uploadResult.secure_url;
+  }
+
   // Update the game in the database regardless of whether an image was uploaded
   await gameDB.updateGame({
     ...req.body,
     imgLink,
     id: req.params.id,
   });
-
-  // If req.file exists we upload the new image that will replace the old one.
-  // To do that we need to fetch the current img link from db to get the image name in cloudinary.
-  // Img link wont change so we dont need to update link in db
-  if (req.file) {
-    response = await gameDB.getGameInfo(req.params.id);
-    imgLink = response.image_link;
-    const imgName = imgLink.split("/").pop().split(".")[0];
-    const processedBuffer = await sharp(req.file.buffer).webp().toBuffer();
-    const uploadResult = await uploadToCloudinary(processedBuffer, imgName);
-  }
 
   return res.sendStatus(200);
 }
@@ -134,19 +115,9 @@ async function addGame(req, res) {
 
 async function deleteGame(req, res) {
   const response = await gameDB.deleteGame(req.params.id);
-  //Delete image in the server
-  const imgPath = path.join(
-    __dirname,
-    "..",
-    "public",
-    `${response.image_link}`,
-  );
-  try {
-    await fs.promises.unlink(imgPath);
-    return res.status(200).json({ success: true });
-  } catch (err) {
-    console.error("Error updating the game image", err);
-  }
+  const imgResponse = await deleteCloudinaryImg(response.image_link);
+
+  return res.status(200).json({ success: true });
 }
 
 module.exports = {

@@ -3,7 +3,6 @@ const path = require("node:path");
 const indexRouter = require("./routes/indexRouter");
 const categoriesRouter = require("./routes/categoriesRouter");
 const developersRouter = require("./routes/developersRouter");
-const imagesRouter = require("./routes/imagesRouter");
 const gamesRouter = require("./routes/gamesRouter");
 
 require("dotenv").config();
@@ -21,7 +20,6 @@ app.use(express.static(assetPath));
 app.use("/", indexRouter);
 app.use("/categories", categoriesRouter);
 app.use("/developers", developersRouter);
-app.use("/images", imagesRouter);
 app.use("/games", gamesRouter);
 
 app.use((err, req, res, next) => {

@@ -1,14 +1,12 @@
 const gameDB = require("../db/gameQueries");
 const sharp = require("sharp");
-const path = require("path");
-const fs = require("fs");
 const { randomUUID } = require("crypto");
 const { validationResult, body } = require("express-validator");
 const {
   uploadToCloudinary,
   deleteCloudinaryImg,
   extractImgName,
-} = require("../cloudinary/coudinary");
+} = require("../cloudinary/cloudinary");
 
 require("dotenv").config();
 

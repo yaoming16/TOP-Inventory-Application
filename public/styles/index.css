@@ -1,27 +1,38 @@
 :root {
-  --color-bg: #121826;
-  --color-surface: #1b2336;
-  --color-surface-elevated: #24304a;
-  --color-surface-elevated-hover: #2c3a5a;
-  --color-primary: #5865f2;
-  --color-primary-hover: #4753d1;
-  --color-accent: #00c2a8;
-  --color-accent-soft: #3bd4bf;
-  --color-text: #f4f7ff;
-  --color-text-muted: #b6c0d9;
-  --color-border: #34415f;
-  --color-btn-primary: #ff8a5b;
-  --color-btn-primary-hover: #f5743f;
-  --color-btn-primary-text: #fff8f4;
-  --color-btn-secondary: #2f9fb5;
-  --color-btn-secondary-hover: #25879a;
-  --color-btn-secondary-text: #f4fbff;
-  --color-btn-ghost: #2b3550;
-  --color-btn-ghost-hover: #354264;
-  --color-btn-ghost-text: #dfe7fb;
-  --color-success: #27c46b;
-  --color-warning: #f4b740;
-  --color-danger: #ef5b6c;
+  /* A deeper, more "arcade/console" dark background */
+  --color-bg: #0f0e13;
+  --color-surface: #1a1824;
+  --color-surface-elevated: #252233;
+  --color-surface-elevated-hover: #2f2b42;
+
+  /* Cyber-neon blues and pinks/purples for a gaming vibe */
+  --color-primary: #ff007f; /* Neon Pink */
+  --color-primary-hover: #cc0066;
+  --color-accent: #00d2ff; /* Cyber Blue */
+  --color-accent-soft: #4ddbff;
+
+  /* Text colors with a slight icy/violet tint */
+  --color-text: #f0ecfc;
+  --color-text-muted: #aba4c4;
+  --color-border: #3d3856;
+
+  /* Retrowave inspired button colors */
+  --color-btn-primary: #ff007f;
+  --color-btn-primary-hover: #cc0066;
+  --color-btn-primary-text: #ffffff;
+
+  --color-btn-secondary: #7b2cbf; /* Deep Purple */
+  --color-btn-secondary-hover: #5a189a;
+  --color-btn-secondary-text: #ffffff;
+
+  --color-btn-ghost: #2b273d;
+  --color-btn-ghost-hover: #3b3652;
+  --color-btn-ghost-text: #d8d2ea;
+
+  /* UI States kept vibrant */
+  --color-success: #00e676;
+  --color-warning: #ffea00;
+  --color-danger: #ff1744;
 }
 
 * {
@@ -194,6 +205,7 @@ label {
 nav {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   padding: 0.5rem;
@@ -228,6 +240,7 @@ nav h2 {
 .navLinksContainer {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: space-around;
   gap: 1rem;
 }

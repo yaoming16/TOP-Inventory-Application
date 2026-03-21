@@ -52,9 +52,7 @@ async function updateGame(req, res) {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    return res
-      .status(400)
-      .render("errors", { errors: errors.array(), goBack: "/games" });
+    return res.status(400).json({ errors });
   }
 
   // Img link won't change so we cant start it as null
@@ -86,15 +84,12 @@ async function addGame(req, res) {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    return res
-      .status(400)
-      .render("errors", { errors: errors.array(), goBack: "/games" });
+    return res.status(400).json({ errors });
   }
 
   if (!req.file) {
-    return res.status(400).render("errors", {
+    return res.status(400).json({
       errors: [{ msg: "Game image is required" }],
-      goBack: "/games",
     });
   }
 

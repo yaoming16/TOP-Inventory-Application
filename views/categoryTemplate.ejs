@@ -11,7 +11,7 @@
   <body>
     <%- include("./elements/nav.ejs") %>
     <main>
-      <h1><%= title %></h1>
+      <h1><%= title.charAt(0).toUpperCase() + title.slice(1); %></h1>
       <button onclick="openEditModal('<%= type %>', 'add')">
         Add <%= title %>
       </button>

@@ -3,7 +3,7 @@ const gamesDB = require("../db/gameQueries");
 
 async function getHomePage(req, res) {
   const totals = await db.getTotals();
-  const lastGames = await gamesDB.getLastGames(2);
+  const lastGames = await gamesDB.getLastGames(4);
   res.render("homepage", { totals, lastGames });
 }
 

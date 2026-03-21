@@ -12,23 +12,64 @@ ul li {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease-in-out;
   max-width: 600px;
+  display: flex;
+  flex-direction: column;
 }
 
 ul li:hover {
   background-color: var(--color-surface-elevated-hover);
-  scale: 1.05;
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 li article {
   display: flex;
-  flex-direction: row;
-  gap: 1rem;
+  flex-direction: column;
+  gap: 1.5rem;
   padding: 2rem;
   justify-content: space-between;
+  text-align: center;
+  flex-grow: 1;
+}
+
+h2 {
+  text-align: center;
+  text-wrap: wrap;
+  overflow-wrap: break-word;
+  font-size: 1.5rem;
+  color: var(--color-text, #fff);
+  margin: auto 0;
 }
 
 .btnDiv {
   display: flex;
   flex-direction: row;
-  gap: 0.25rem;
+  width: 100%;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.btnDiv button {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  font-weight: bold;
+}
+
+#cardsContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (max-width: 1200px) {
+  ul {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  ul {
+    grid-template-columns: 1fr;
+    padding: 10px;
+  }
 }

@@ -102,14 +102,38 @@ dialog {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 2rem;
   margin: auto auto;
+  /* Make the dialog responsive */
+  width: 90vw;
+  max-width: 600px;
+  max-height: 90vh;
+  /* Allow scrolling if content overflows */
+  overflow-y: auto;
 }
 
 dialog h2 {
   margin-bottom: 1rem;
 }
 
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+}
+
+/* Ensure form inputs don't break out of the dialog on small screens */
+dialog form input,
+dialog form textarea,
+dialog form select {
+  max-width: 100%;
+}
+
+@media (max-width: 480px) {
+  dialog {
+    padding: 1.5rem;
+  }
+}
+
 /* Footer */
-.footer {
+footer {
   background-color: var(--color-surface);
   border-top: 1px solid var(--color-border);
   padding: 2rem;

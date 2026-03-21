@@ -55,14 +55,13 @@ async function deleteElement(id, table) {
 }
 
 async function getTotals() {
-  const categories  = await pool.query(
+  const categories = await pool.query(
     `SELECT COUNT(DISTINCT name) FROM categories`,
   );
-  const  developers  = await pool.query(
+  const developers = await pool.query(
     `SELECT COUNT(DISTINCT name) FROM developers`,
   );
-  const  games  = await pool.query(`SELECT COUNT(DISTINCT id) FROM games`);
-  console.log(games)
+  const games = await pool.query(`SELECT COUNT(DISTINCT id) FROM games`);
 
   return {
     categories: categories.rows[0].count,

@@ -57,7 +57,7 @@ The core purpose of this project is to practice creating a functional Node/Expre
 
 ![Add/Edit Modal](public/images/addgame.png)
 
-### Developers
+### Categories
 
 ![Games Catalog](/public/images/developers.png)
 

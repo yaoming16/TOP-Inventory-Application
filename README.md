@@ -45,6 +45,7 @@ The core purpose of this project is to practice creating a functional Node/Expre
 ## 📸 Screenshots
 
 ### The Homepage
+![Homepage](public/images/homepage.png)
 
 ![Homepage](/public/images/homepage2.png)
 
